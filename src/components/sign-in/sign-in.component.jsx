@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
@@ -58,7 +58,10 @@ class SignIn extends React.Component {
              Google sign-in
             </CustomButton>
           </div>
-        </form>
+          </form>
+           <Link className = 'link' to='/signup'>
+          <h3>Register an account</h3>
+        </Link>
       </div>
     );
   }

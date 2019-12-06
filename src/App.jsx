@@ -5,7 +5,8 @@ import Header from './components/header/header.component';
 import HomePage from './pages/homepage/homepage.component'
 import ShopPage from './pages/shop/shoppage.component';
 import SignInandSignUpPage from './pages/sign-in-page/sign-in-and-sign-up.component';
-import { auth } from './firebase/firebase.utils';
+import SignUpPage from './pages/sign-up-page/sign-up-page.component';
+import { auth , createUserProfileDocument } from './firebase/firebase.utils';
 const HatsPage = () => (
   <div><h1>HatsPage</h1></div>
 )
@@ -21,12 +22,20 @@ class App extends React.Component {
       unsubscribeFromAuth = null;
 
       componentDidMount() {
-        this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-          this.setState({
-            currentUser: user
-          });
-
-          console.log(user);
+        this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth => {
+          if(userAuth){
+            const userRef = await createUserProfileDocument(userAuth);
+            userRef.onSnapshot(snapShot => {
+             this.setState({
+               currentUser: {
+                 id:snapShot.id,
+                 ...snapShot.data()
+               }
+             });
+             console.log(this.state);
+            });
+          }
+          this.setState({ currentUser: userAuth });
         });
       }
 
@@ -42,6 +51,8 @@ class App extends React.Component {
       <Route exact path = '/hats' component = { HatsPage } />
       <Route exact path = '/shop' component = { ShopPage } />
       <Route exact path = '/signin' component = { SignInandSignUpPage } />
+      <Route exact path = '/signup' component = { SignUpPage } />
+
     </div> 
   );
     
