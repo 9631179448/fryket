@@ -1,4 +1,5 @@
 import React from 'react';
+
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
@@ -93,7 +94,7 @@ class SignUp extends React.Component {
             required
           />
           <CustomButton type='submit'>SIGN UP</CustomButton>
-          </form>
+        </form>
       </div>
     );
   }
