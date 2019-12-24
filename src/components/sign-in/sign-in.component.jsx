@@ -2,10 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
-import { auth , signInWithGoogle } from '../../firebase/firebase.utils';
-
-import './sign-in.styles.scss';
+import {
+  SignInContainer,
+  SignInTitle,
+  ButtonsBarContainer
+} from './sign-in.styles';
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -19,18 +22,17 @@ class SignIn extends React.Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-    const  { email ,password } = this.state;
+
+    const { email, password } = this.state;
+
     try {
-      await auth.signInWithEmailAndPassword(email ,password)
-          this.setState({
-            email: '',
-            password: ''
-          });
-        } catch(err) {
-          console.log(err);
-        }
+      await auth.signInWithEmailAndPassword(email, password);
+      this.setState({ email: '', password: '' });
+    } catch (error) {
+      console.log(error);
+    }
   };
-    
+
   handleChange = event => {
     const { value, name } = event.target;
 
@@ -39,8 +41,8 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div className='sign-in'>
-        <h2>I already have an account</h2>
+      <SignInContainer>
+        <SignInTitle>I already have an account</SignInTitle>
         <span>Sign in with your email and password</span>
 
         <form onSubmit={this.handleSubmit}>
@@ -60,17 +62,17 @@ class SignIn extends React.Component {
             label='password'
             required
           />
-          <div className='buttons'>
+          <ButtonsBarContainer>
             <CustomButton type='submit'> Sign in </CustomButton>
             <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
-             Google sign-in
+             Google Sign In
             </CustomButton>
-          </div>
-          </form>
-           <Link className = 'link' to='/signup'>
+          </ButtonsBarContainer>
+        </form>
+             <Link className = 'link' to='/signup'>
           <h3>Register an account</h3>
         </Link>
-      </div>
+      </SignInContainer>
     );
   }
 }

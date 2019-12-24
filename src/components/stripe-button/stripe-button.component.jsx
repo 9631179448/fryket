@@ -3,7 +3,7 @@ import StripeCheckout from 'react-stripe-checkout';
 
 const StripeCheckoutButton = ({ price }) => {
   const priceForStripe = price * 100;
-  const publishableKey = 'pk_test_QdBIVlOEzNxo0QtGa689pklp008NwXytDX';
+  const publishableKey = 'pk_test_WBqax2FWVzS9QlpJScO07iuL';
 
   const onToken = token => {
     console.log(token);
@@ -11,9 +11,9 @@ const StripeCheckoutButton = ({ price }) => {
   };
 
   return (
-    <StripeCheckout className = 'payment'
+    <StripeCheckout
       label='Pay Now'
-      name='fryket'
+      name='TENET.'
       billingAddress
       shippingAddress
       image='https://svgshare.com/i/CUz.svg'
